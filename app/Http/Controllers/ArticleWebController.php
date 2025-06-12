@@ -36,6 +36,12 @@ class ArticleWebController extends Controller
                          ->with('success', 'Article created successfully!');
     }
 
+    public function show(Article $article)
+    {
+        $articles = collect([$article]);
+        return view('articles.index', compact('articles'));
+    }
+
     public function edit(Article $article)
     {
         return view('articles.form', [
