@@ -1,51 +1,46 @@
-@extends('layout')
+@extends('layouts.article')
+
+@section('title', isset($article) ? 'Edit Article' : 'Create Article')
 
 @section('content')
-    <h1 class="h3 mb-4">
-        {{ $article->exists ? 'Edit Article' : 'Create Article' }}
-    </h1>
+<div class="max-w-2xl mx-auto px-4 py-8">
+    <h2 class="text-3xl font-bold mb-6 text-center text-red-400">
+        {{ isset($article) ? 'Edit Article' : 'Create Article' }}
+    </h2>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>There were errors:</strong>
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ $action }}" method="POST">
+    <form action="{{ isset($article) ? url('/articles/' . $article->id) : url('/articles') }}" method="POST" class="space-y-6">
         @csrf
-        @if ($method === 'PUT')
+        @if(isset($article))
             @method('PUT')
         @endif
 
-        <div class="mb-3">
-            <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
-            <input type="text" name="title" id="title" class="form-control"
-                   value="{{ old('title', $article->title) }}" required>
+        <div>
+            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Title</label>
+            <input type="text" name="title" id="title" value="{{ old('title', $article->title ?? '') }}"
+                   class="mt-1 block w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500">
         </div>
 
-        <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
-            <textarea name="content" id="content" rows="4" class="form-control">{{ old('content', $article->content) }}</textarea>
+        <div>
+            <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Content</label>
+            <textarea name="content" id="content" rows="5"
+                      class="mt-1 block w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500">{{ old('content', $article->content ?? '') }}</textarea>
         </div>
 
-        <div class="mb-3">
-            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-            <select name="status" id="status" class="form-select" required>
-                <option value="ativo" {{ old('status', $article->status) === 'ativo' ? 'selected' : '' }}>Active</option>
-                <option value="inativo" {{ old('status', $article->status) === 'inativo' ? 'selected' : '' }}>Inactive</option>
+        <div>
+            <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Status</label>
+            <select name="status" id="status"
+                    class="mt-1 block w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500">
+                <option value="ativo" {{ old('status', $article->status ?? '') == 'ativo' ? 'selected' : '' }}>Active</option>
+                <option value="inativo" {{ old('status', $article->status ?? '') == 'inativo' ? 'selected' : '' }}>Inactive</option>
             </select>
         </div>
 
-        <div class="d-flex justify-content-between">
-            <a href="{{ route('articles.index') }}" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-success">
-                {{ $article->exists ? 'Update' : 'Create' }}
+        <div class="flex justify-between">
+            <button type="submit"
+                    class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow">
+                {{ isset($article) ? '✏️' : '✚' }}
             </button>
         </div>
     </form>
+</div>
 @endsection

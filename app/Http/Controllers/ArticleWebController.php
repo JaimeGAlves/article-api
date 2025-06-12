@@ -15,11 +15,7 @@ class ArticleWebController extends Controller
 
     public function create()
     {
-        return view('articles.form', [
-            'article' => new Article(),
-            'action' => route('articles.store'),
-            'method' => 'POST'
-        ]);
+        return view('articles.form');
     }
 
     public function store(Request $request)
@@ -44,11 +40,7 @@ class ArticleWebController extends Controller
 
     public function edit(Article $article)
     {
-        return view('articles.form', [
-            'article' => $article,
-            'action' => route('articles.update', $article),
-            'method' => 'PUT'
-        ]);
+        return view('articles.form', compact('article'));
     }
 
     public function update(Request $request, Article $article)

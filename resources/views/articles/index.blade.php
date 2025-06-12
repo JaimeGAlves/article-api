@@ -40,7 +40,7 @@
                             <form action="/articles/{{ $article->id }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')" title="Excluir">🗑️</button>
+                                <button type="submit" onclick="return confirm('Are you sure you want to delete?')" title="Excluir">🗑️</button>
                             </form>
                         </td>
                     </tr>

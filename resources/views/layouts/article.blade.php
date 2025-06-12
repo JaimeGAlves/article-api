@@ -37,7 +37,7 @@
 
 <div class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
     <header class="bg-red-600 text-white p-6 shadow-md flex justify-between items-center">
-        <h1 class="text-xl font-bold">STS Informática</h1>
+        <li><a href="/" class="text-xl font-bold">STS Informática</a></li>
     </header>
 
     <main class="flex-grow px-6 py-10">
